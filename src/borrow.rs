@@ -9,6 +9,7 @@ pub fn impl_borrow(input: DeriveInput) -> proc_macro::TokenStream {
     };
 
     let struct_ident = input.ident;
+    let struct_generics = input.generics;
 
     let (fields, is_named) = match data.fields {
         Fields::Named(named_fields) => (named_fields.named, true),
@@ -48,7 +49,7 @@ pub fn impl_borrow(input: DeriveInput) -> proc_macro::TokenStream {
             let field_type = field.ty;
 
             quote! {
-                impl Borrow<#field_type> for #struct_ident {
+                impl #struct_generics std::borrow::Borrow<#field_type> for #struct_ident #struct_generics {
                     fn borrow(&self) -> &#field_type {
                         &#field_tokens
                     }

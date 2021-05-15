@@ -1,3 +1,5 @@
+//! Automatically derive [`Borrow`] for the fields of a given struct
+
 mod borrow;
 use borrow::impl_borrow;
 
